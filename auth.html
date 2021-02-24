@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Auth</title>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDoSPtGTFz-76mhuJf_VSkK2r1xIou4C48",
+            authDomain: "newproj-236818.firebaseapp.com",
+            projectId: "newproj-236818",
+            storageBucket: "newproj-236818.appspot.com",
+            messagingSenderId: "78360540441",
+            appId: "1:78360540441:web:c3d1caa1135425879e8188"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+
+        // facebook
+        const FacebookAuth = new firebase.auth.FacebookAuthProvider();
+        FacebookAuth.add
+        // google
+        const GoogleAuth = new firebase.auth.GoogleAuthProvider();
+
+        function facebookSignIn(provider) {
+            firebase
+                .auth()
+                .signInWithPopup(FacebookAuth)
+                .then((result) => {
+                    var credential = result.credential;
+                    var user = result.user;
+                    var accessToken = credential.accessToken;
+                    var idToken = credential.idToken;
+                    console.log(result);
+
+                    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+                        // Send token to your backend via HTTPS
+                        console.log("////////////// from inside");
+                        console.log(idToken);
+                        // ...
+                    }).catch(function (error) {
+                        // Handle error
+                    });
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        }
+        function googleSignIn(provider) {
+            firebase
+                .auth()
+                .signInWithPopup(GoogleAuth)
+                .then((result) => {
+                    var credential = result.credential;
+                    var user = result.user;
+                    var accessToken = credential.accessToken;
+                    console.log(result);
+
+                    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+                        // Send token to your backend via HTTPS
+                        console.log("////////////// from inside");
+                        console.log(idToken);
+                        // ...
+                    }).catch(function (error) {
+                        // Handle error
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        }
+    </script>
+
+    </script>
+</head>
+
+<body>
+    <button onclick="facebookSignIn()">Facebook</button>
+    <button onclick="googleSignIn()">Google</button>
+
+</body>
+
+</html>
